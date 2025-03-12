@@ -8,6 +8,9 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+  signInFailure,
 } from "../redux/user/userSlice.js"
 import { set } from "mongoose"
 
@@ -95,6 +98,21 @@ export default function Profile() {
       dispatch(deleteUserFailure(error.message))
     }
   }
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart())
+      const res = await fetch("/api/auth/signout")
+      const data = await res.json()
+      if (data.success === false) {
+        dispatch(signInFailure(data.message
+        ))
+        return
+      }
+      dispatch(signOutUserSuccess(data))
+    } catch (error) {
+      dispatch(signInFailure(error.message))
+    }
+  }
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -164,7 +182,9 @@ export default function Profile() {
         >
           Delete Account
         </span>
-        <span className="text-red-700 cursor-pointer">Sign Out</span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+          Sign Out
+        </span>
       </div>
       <p className="text-red-600">{error ? error : ""}</p>
       <p className="text-green-500">
