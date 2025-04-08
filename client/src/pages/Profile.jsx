@@ -13,6 +13,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice.js"
 import { set } from "mongoose"
+import { Link } from "react-router-dom"
 
 export default function Profile() {
   const fileRef = useRef(null)
@@ -104,8 +105,7 @@ export default function Profile() {
       const res = await fetch("/api/auth/signout")
       const data = await res.json()
       if (data.success === false) {
-        dispatch(signInFailure(data.message
-        ))
+        dispatch(signInFailure(data.message))
         return
       }
       dispatch(signOutUserSuccess(data))
@@ -174,6 +174,12 @@ export default function Profile() {
         >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+          className="bg-green-700 p-3 text-white rounded-lg hover:opacity-90 uppercase text-center"
+          to={"/create-listing"}
+        >
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-6">
         <span
