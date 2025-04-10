@@ -128,6 +128,7 @@ export default function Profile() {
         return
       }
       setUserListings(data)
+      setShowListingsError(false)
     } catch (error) {
       setShowListingsError(true)
     }
