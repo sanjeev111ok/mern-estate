@@ -1,6 +1,7 @@
 import { set } from "mongoose"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import ListingItem from "../components/ListingItem.jsx"
 export default function Search() {
   const navigate = useNavigate()
   const [sidebardata, setSidebardata] = useState({
@@ -198,10 +199,27 @@ export default function Search() {
           </button>
         </form>
       </div>
-      <div className="">
+      <div className="flex-1">
         <h1 className="text-3xl font-semibold border-b p-3 border-gray-400 mt-5 text-slate-700">
           Listing Results:
         </h1>
+        <div className="p-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6">
+          {!loading && listings.length === 0 && (
+            <p classname="text-xl text-slate-700  text-semibold">
+              No Listing found!!!
+            </p>
+          )}
+          {loading && (
+            <p className="text-xl text-slate-700 text-center text-semibold w-full">
+              Loading...
+            </p>
+          )}
+          {!loading &&
+            listings &&
+            listings.map((listing) => {
+              return <ListingItem key={listing._id} listing={listing} />
+            })}
+        </div>
       </div>
     </div>
   )
