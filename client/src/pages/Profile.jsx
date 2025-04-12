@@ -72,6 +72,7 @@ export default function Profile() {
           "Content-Type": "application/json",
           // authorization: localStorage.getItem("token"),
         },
+        credentials: "include",
         body: JSON.stringify(formData),
       })
       const data = await res.json()
@@ -269,9 +270,10 @@ export default function Profile() {
                   Delete
                 </button>
                 <Link to={`/update-listing/${listing._id}`}>
-                <button  className="text-green-700 hover:underline uppercase">
-                  Edit
-                </button></Link>
+                  <button className="text-green-700 hover:underline uppercase">
+                    Edit
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
